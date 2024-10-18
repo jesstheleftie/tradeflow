@@ -27,6 +27,33 @@ The app uses [Polygon.io](https://polygon.io) to fetch real-time stock prices an
 ### Key API Endpoints:
 - **Stock Prices**: Fetch current stock prices and historical data.
 - **Ticker Info**: Search stocks by ticker symbol or company name.
+
+## User Stories
+
+### 1. Stock Searching and Information
+- **As a User**, I want to search for a stock by name or ticker symbol so that I can quickly find the stock I am interested in.
+- **As a User**, I want to view real-time pricing data in a graphical format so that I can analyze the stock's performance over time.
+
+### 2. Buying and Selling Stocks
+- **As a User**, I want to buy stocks using virtual currency so that I can simulate stock trading without real financial risks.
+- **As a User**, I want to sell stocks from my portfolio so that I can manage my stock holdings and simulate market transactions.
+
+### 3. User Authentication
+- **As a User**, I want to log in to my account so that I can securely access my personal watchlist and transactions.
+- **As a User**, I want to sign up for an account to start using the app with my own virtual portfolio and watchlist.
+
+### 4. Watchlist Management
+- **As a User**, I want to create a watchlist to track multiple stocks I am interested in.
+- **As a User**, I want to view a popular watchlist with trending stocks, even before logging in, so that I can see market highlights.
+
+### 5. Portfolio Tracking
+- **As a User**, I want to view my buy and sell transactions so that I can keep track of my investment activities.
+- **As a User**, I want to monitor the total quantity of stocks I own so that I can evaluate my virtual portfolio.
+
+### 6. Additional Features (Stretch Goals)
+- **As a User**, I want to switch to dark mode to reduce eye strain and enhance my viewing experience.
+- **As a User**, I want to see a moving header displaying popular stocks or stock exchanges so that I stay informed about key market movements at a glance.
+
   
 
 
