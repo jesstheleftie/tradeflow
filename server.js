@@ -6,6 +6,7 @@ const cors = require("cors");
 const stockController = require("./controllers/stockController");
 const userController = require("./controllers/userController");
 const watchlistItemController = require("./controllers/watchlistItemController");
+const transactionController = require("./controllers/transactionController");
 const app = express();
 // const plantController = require('./controllers/plantController')
 
@@ -25,6 +26,7 @@ app.get("/users/:id", userController.getUserByName);
 app.put("/users/:id", userController.updateUser);
 app.delete("/users/:id", userController.deleteUser);
 app.get("/users", userController.getAllUsers);
+app.post("/users/login", userController.login);
 app.post("/users", userController.createUser);
 
 //Watchlist CRUD
@@ -36,3 +38,10 @@ app.put("/watchlistItems/:id", watchlistItemController.updateWatchlistItem);
 app.delete("/watchlistItems/:id", watchlistItemController.deleteWatchlistItem);
 app.get("/watchlistItems", watchlistItemController.getAllWatchlistItems);
 app.post("/watchlistItems", watchlistItemController.createWatchlistItem);
+
+//Transaction CRUD
+app.get("/transactions/:id", transactionController.getTransactionByUserId);
+app.put("/transactions/:id", transactionController.updateTransaction);
+app.delete("/transactions/:id", transactionController.deleteTransaction);
+app.get("/transactions", transactionController.getAllTransactions);
+app.post("/transactions", transactionController.createTransaction);

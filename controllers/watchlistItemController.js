@@ -27,8 +27,7 @@ const getWatchlistItemsByUserId = async (req, res) => {
 const createWatchlistItem = async (req, res) => {
   try {
     const watchlist = new WatchlistItems(req.body);
-    let saved = await watchlist.save();
-    console.log("Saved", saved);
+    await watchlist.save();
     return res.status(201).json({ watchlist });
   } catch (error) {
     return res.json({ error: error.message });
