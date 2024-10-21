@@ -6,18 +6,21 @@ body {
     border: 1px solid red;
     width: 100vw;
     height: 100vh;
+    background: rgb(235, 235, 235)
 }
 
 .topNav {
     border: 1px solid green;
     height: 50px;
+    background: rgb(60,60,60)
 }
 
 .mainBody {
     border: 1px solid blue;
-    height: calc(100% - 50px);
+    height: calc(100% - 50px - 20px);
     display: flex;
-    width: 100%;
+    margin: 10px;
+    width: calc(100% - 20px);
 }
 
 .leftColumn {
@@ -28,8 +31,9 @@ body {
 
 .middleColumn {
     border: 1px solid purple;
-    width: 65%;
-    min-width: calc(100% - 550px);
+    width: calc(65% - 20px);
+    min-width: calc(100% - 550px -20px);
+    margin: 0 10px
 }
 
 .rightColumn {
