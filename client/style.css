@@ -1,0 +1,70 @@
+body {
+    margin: 0;
+}
+
+.appContainer {
+    border: 1px solid red;
+    width: 100vw;
+    height: 100vh;
+}
+
+.topNav {
+    border: 1px solid green;
+    height: 50px;
+}
+
+.mainBody {
+    border: 1px solid blue;
+    height: calc(100% - 50px);
+    display: flex;
+    width: 100%;
+}
+
+.leftColumn {
+    border: 1px solid orange;
+    width: 15%;
+    max-width: 250px;
+}
+
+.middleColumn {
+    border: 1px solid purple;
+    width: 65%;
+    min-width: calc(100% - 550px);
+}
+
+.rightColumn {
+    border: 1px solid pink;
+    width: 20%;
+    max-width: 300px;
+}
+
+.leftColumnTop {
+    border: 1px solid red;
+    height: 40%
+}
+
+.accountSummaryContainer {
+    border: 1px solid black;
+    height: 80px;
+}
+
+.accountTransactionContainer {
+    border: 1px solid orange;
+    height: calc(100% - 80px)
+}
+
+.leftColumnBotoom {
+    border: 1px solid blue;
+    height: 60%;
+}
+
+
+.middleColumnTop {
+    border: 1px solid red;
+    height: calc(100% - 80px);
+}
+
+.middleColumnBottom {
+    border: 1px solid blue;
+    height: 80px;
+}
