@@ -5,18 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <script defer src="./script.js"></script>
-    <title>Tradeflow</title>
+    <title class="brandTitle">Tradeflow</title>
     <script
       type="text/javascript"
       src="https://www.gstatic.com/charts/loader.js"
     ></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
   </head>
 
   <body>
     <div class="appContainer">
       <div class="topNav">
-        <div class="logo">Tradeflow</div>
+        <div class="appTitle">Tradeflow</div>
         <div id="credentialsContainer"class="credentialsContainer">
           <input id="usernameInput" placeholder="Username" />
           <input id="pinInput" placeholder="Pin" />
@@ -31,9 +34,15 @@
         <div class="leftColumn">
           <div class="leftColumnTop cardStyle">
             <div class="accountSummaryContainer">Summary</div>
-            <div class="accountTransactionContainer">Transactions</div>
+            <div class="accountTransactionContainer">
+              <div class="transactionTitle">Transactions</div>
+              <div id="transactionContainer" class="transactionContainer"></div>
+            </div>
           </div>
-          <div class="leftColumnBottom cardStyle">left bottom</div>
+          <div class="leftColumnBottom cardStyle">
+            <div class="watchlistTitle">Watchlist</div>
+            <div id="watchlistItemContainer" class="watchlistItemContainer"></div>
+          </div>
         </div>
         <div class="middleColumn cardStyle">
           <div class="middleColumnTop">
@@ -52,9 +61,9 @@
             <div id="chartContainer" class="chartBox"></div>
           </div>
 
-          <div class="middleColumnButtom">middle bottom</div>
+          <div class="middleColumnButtom">Orders</div>
         </div>
-        <div class="rightColumn cardStyle">right</div>
+        <div class="rightColumn cardStyle">News</div>
       </div>
     </div>
   </body>

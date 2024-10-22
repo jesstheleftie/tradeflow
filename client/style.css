@@ -17,6 +17,15 @@ body {
     justify-content: space-between;
 }
 
+.appTitle{
+    font-family: "Righteous",sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    font-style: normal;
+    color: rgb(209, 162, 45)
+
+}
+
 .loggedInContainer{
     display:flex;
     align-items: center;

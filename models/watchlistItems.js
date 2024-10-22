@@ -5,6 +5,7 @@ const WatchlistItem = new Schema(
   {
     user_id: { type: Schema.Types.ObjectId, ref: "User" },
     ticker: { type: String, required: true },
+    companyName: {type: String, required: true}
   },
   { timestamps: true }
 );

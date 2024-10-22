@@ -24,45 +24,32 @@ const drawChart = (input) => {
 google.charts.load("current", { packages: ["corechart"] });
 google.charts.setOnLoadCallback(drawChart);
 
-// setTimeout(() => {
-//   drawChart(
-//     [
-//       [
-//         "Day",
-//         "High Price",
-//         "Opening Price",
-//         "Closing Price",
-//         "Low Price",
-//         { role: "style", type: "string" },
-//       ],
-//       ["Mon", 26, 18, 17, 15, "red"],
-//       ["Tue", 26, 18, 19, 15, "green"],
-//       ["Wed", 24, 22, 28, 26, "green"],
-//       ["Thu", 26, 24, 30, 28, "green"],
-//       ["Fri", 28, 26, 32, 30, "green"],
-//     ],
-//     true
-//   );
-// }, 100);
-// setTimeout(() => {
-//   drawChart([
-//     ["test1", "test2", "test3"],
-//     ["1", 1, 1],
-//     ["2", 2, 2],
-//     ["3", 3, 3],
-//     ["4", 4, 4],
-//   ]);
-// }, 2000);
+//Elements
+const searchInputElement = document.getElementById("searchInput");
+const searchButtonElement = document.getElementById("searchButton");
+const titleTickerElement = document.querySelector(".titleTicker");
+const titleCompanyNameElement = document.querySelector(".titleCompanyName");
+const chartHeaderStockPriceElement = document.querySelector(
+  ".chartHeaderStockPrice"
+);
+const usernameInputElement = document.getElementById("usernameInput");
+const pinInputElement = document.getElementById("pinInput");
+const loginButtonElement = document.getElementById("loginButton");
 
-// setTimeout(() => {
-//   drawChart([
-//     ["test1", "test2", "test3"],
-//     ["1", 5, 2],
-//     ["2", 3, 6],
-//     ["3", 6, 7],
-//     ["4", 1, 4],
-//   ]);
-// }, 4000);
+const credentialsContainerElement = document.getElementById(
+  "credentialsContainer"
+);
+const loggedInContainerElement = document.getElementById("loggedInContainer");
+const welcomeMessageElement = document.getElementById("welcomeMessage");
+const logoutButtonElement = document.getElementById("logoutButton");
+
+const watchlistItemContainerElement = document.getElementById(
+  "watchlistItemContainer"
+);
+
+const transactionContainerElement = document.getElementById(
+  "transactionContainer"
+);
 
 //Data & Values
 let searchInput = "AAPL";
@@ -87,11 +74,15 @@ let usernameInput = "";
 let pinInput = "";
 let loggedIn = false;
 let loggedInUser = {
+  _id: "",
   username: "",
   pin: "",
   transactions: [],
   watchlistItems: [],
 };
+
+let userWatchlist = [];
+let userTransaction = [];
 
 //Functions
 const login = async () => {
@@ -108,6 +99,9 @@ const login = async () => {
     if (foundUser) {
       loggedIn = true;
       loggedInUser = foundUser.data;
+
+      getUserWatchlist();
+      getUserTransaction();
     } else {
       console.log("invalid");
     }
@@ -118,12 +112,69 @@ const login = async () => {
 const logout = () => {
   loggedIn = false;
   loggedInUser = {
+    _id: "",
     username: "",
     pin: "",
     transactions: [],
     watchlistItems: [],
   };
+  userWatchlist = [];
+  userTransaction = [];
+
   render();
+};
+
+const getUserWatchlist = async () => {
+  if (loggedIn) {
+    try {
+      let returnData = await axios.get(
+        `http://localhost:3001/watchlistItems/${loggedInUser._id}`
+      );
+      userWatchlist = returnData.data;
+    } catch (error) {}
+  }
+  render();
+};
+
+const renderWatchlist = () => {
+  watchlistItemContainerElement.innerHTML = "";
+  console.log("userWatchlist", userWatchlist);
+  userWatchlist.forEach((eachStock) => {
+    let newDiv = document.createElement("div");
+    newDiv.classList.add("watchlistItem");
+    newDiv.innerHTML = `
+<div class="watchlistItemTicker">${eachStock.ticker}</div>
+<div class="watchlistItemCompanyName">${eachStock.companyName}</div>
+`;
+
+    newDiv.addEventListener("click", () => {
+      searchStock(eachStock.ticker);
+    });
+    watchlistItemContainerElement.appendChild(newDiv);
+  });
+};
+
+const getUserTransaction = async () => {
+  if (loggedIn) {
+    try {
+      let returnData = await axios.get(
+        `http://localhost:3001/transactions/${loggedInUser._id}`
+      );
+      userTransaction = returnData.data;
+    } catch (error) {}
+  }
+  render();
+  console.log("user transaction", userTransaction);
+};
+
+const renderTransaction = () => {
+  transactionContainerElement.innerHTML = "";
+  userTransaction.forEach((eachTransaction) => {
+    let newDiv = document.createElement("div");
+    newDiv.classList.add("transactionItem");
+    newDiv.innerHTML = `<div class="transactionTicker">${eachTransaction.ticker}</div><div class="transactionShareQty">${eachTransaction.qty}</div><div class="transactionSharePrice">${eachTransaction.price}</div>`;
+    transactionContainerElement.appendChild(newDiv);
+  });
 };
 
 const searchStock = async (searchInput) => {
@@ -188,24 +239,6 @@ const getAllStocks = async () => {
   }
 };
 
-//Elements
-const searchInputElement = document.getElementById("searchInput");
-const searchButtonElement = document.getElementById("searchButton");
-const titleTickerElement = document.querySelector(".titleTicker");
-const titleCompanyNameElement = document.querySelector(".titleCompanyName");
-const chartHeaderStockPriceElement = document.querySelector(
-  ".chartHeaderStockPrice"
-);
-const usernameInputElement = document.getElementById("usernameInput");
-const pinInputElement = document.getElementById("pinInput");
-const loginButtonElement = document.getElementById("loginButton");
-
-const credentialsContainerElement = document.getElementById(
-  "credentialsContainer"
-);
-const loggedInContainerElement = document.getElementById("loggedInContainer");
-const welcomeMessageElement = document.getElementById("welcomeMessage");
-const logoutButtonElement = document.getElementById("logoutButton");
 //event listeners
 searchInputElement.addEventListener("input", (e) => {
   searchInput = e.target.value;
@@ -254,4 +287,7 @@ const render = () => {
   }
   usernameInputElement.value = usernameInput;
   pinInputElement.value = pinInput;
+
+  renderWatchlist();
+  renderTransaction();
 };

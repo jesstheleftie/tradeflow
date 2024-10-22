@@ -30,11 +30,11 @@ const run = async () => {
   let demoUser = await Users.findOne({ username: "demo" });
   console.log("Found Demo User", demoUser);
   const watchlistItems = [
-    { user_id: demoUser._id, ticker: "TSLA" },
-    { user_id: demoUser._id, ticker: "AAPL" },
-    { user_id: demoUser._id, ticker: "NVDA" },
-    { user_id: demoUser._id, ticker: "META" },
-    { user_id: demoUser._id, ticker: "MSFT" },
+    { user_id: demoUser._id, ticker: "TSLA", companyName: "Tesla Inc." },
+    { user_id: demoUser._id, ticker: "AAPL", companyName: "Apple Inc." },
+    { user_id: demoUser._id, ticker: "NVDA", companyName: "NVDIA Corp."},
+    { user_id: demoUser._id, ticker: "META", companyName: "Meta Platforms" },
+    { user_id: demoUser._id, ticker: "MSFT", companyName: "Microsoft Inc." },
   ];
 
   let createdWashlistItems = await WatchlistItems.insertMany(watchlistItems);
