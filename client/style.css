@@ -3,47 +3,55 @@ body {
 }
 
 .appContainer {
-    border: 1px solid red;
     width: 100vw;
     height: 100vh;
     background: rgb(235, 235, 235)
 }
 
 .topNav {
-    border: 1px solid green;
     height: 50px;
-    background: rgb(60,60,60)
+    background: rgb(60,60,60);
+    box-shadow: 0px 5px 10px rgb(158, 157, 157);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.loggedInContainer{
+    display:flex;
+    align-items: center;
 }
 
 .mainBody {
-    border: 1px solid blue;
     height: calc(100% - 50px - 20px);
     display: flex;
     margin: 10px;
     width: calc(100% - 20px);
 }
 
+.cardStyle{
+    background: rgb(253,253,253);
+    border-radius: 3px;
+    box-shadow: 0px 5px 10px rgb(158, 157, 157);
+}
+
 .leftColumn {
-    border: 1px solid orange;
     width: 15%;
     max-width: 250px;
 }
 
 .middleColumn {
-    border: 1px solid purple;
     width: calc(65% - 20px);
     min-width: calc(100% - 550px -20px);
     margin: 0 10px
 }
 
 .rightColumn {
-    border: 1px solid pink;
     width: 20%;
     max-width: 300px;
 }
 
 .leftColumnTop {
-    border: 1px solid red;
     height: 40%
 }
 
@@ -57,9 +65,9 @@ body {
     height: calc(100% - 80px)
 }
 
-.leftColumnBotoom {
-    border: 1px solid blue;
-    height: 60%;
+.leftColumnBottom {
+    height: calc(60% - 10px);
+    margin-top: 10px;
 }
 
 
@@ -67,8 +75,24 @@ body {
     border: 1px solid red;
     height: calc(100% - 80px);
 }
+.chartBox{
+    height: calc(100% - 50px - 10px);
+    width: 100%;
+}
+
+.chartHeaderContainer{
+    display: flex;
+    align-items: center;
+    margin: 5px 10px; 
+    height: 50px;
+}
+.searchContainer{
+    margin-left: auto;
+}
+
 
 .middleColumnBottom {
     border: 1px solid blue;
     height: 80px;
 }
+

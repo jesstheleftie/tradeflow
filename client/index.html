@@ -10,26 +10,52 @@
       type="text/javascript"
       src="https://www.gstatic.com/charts/loader.js"
     ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
 
   <body>
     <div class="appContainer">
-      <div class="topNav">Top Nav</div>
+      <div class="topNav">
+        <div class="logo">Tradeflow</div>
+        <div class="credentialsContainer">
+          <input placeholder="Username" />
+          <input placeholder="pin" />
+          <button>Login</button>
+        </div>
+        <!-- <div class="loggedInContainer">
+            <div>Hi, username</div>
+            <button>Log out</button>
+        </div> -->
+      </div>
       <div class="mainBody">
         <div class="leftColumn">
-          <div class="leftColumnTop">
+          <div class="leftColumnTop cardStyle">
             <div class="accountSummaryContainer">Summary</div>
             <div class="accountTransactionContainer">Transactions</div>
           </div>
-          <div class="leftColumnBottom">left bottom</div>
+          <div class="leftColumnBottom cardStyle">left bottom</div>
         </div>
-        <div class="middleColumn">
-            <div class="middleColumnTop">middle top</div>
-            <div class="middleColumnButtom"> middle bottom</div>
+        <div class="middleColumn cardStyle">
+          <div class="middleColumnTop">
+            <div class="chartHeaderContainer">
+              <div class="nameTitleContainer">
+                <div>Ticker</div>
+                <div>Company Name</div>
+              </div>
+              <div class="chartHeaderStockPrice">Stock Price</div>
+              <div class="searchContainer">
+                <input id="searchInput" /><button id="searchButton">
+                  Search
+                </button>
+              </div>
+            </div>
+            <div id="chartContainer" class="chartBox"></div>
+          </div>
+
+          <div class="middleColumnButtom">middle bottom</div>
         </div>
-        <div class="rightColumn">right</div>
+        <div class="rightColumn cardStyle">right</div>
       </div>
     </div>
-    <!-- <div id="chartContainer" style="width: 100vw; height: 100vh;"></div> -->
   </body>
 </html>

@@ -6,6 +6,7 @@ const cors = require("cors");
 const stockController = require("./controllers/stockController");
 const userController = require("./controllers/userController");
 const watchlistItemController = require("./controllers/watchlistItemController");
+const tickerController = require("./controllers/tickerController");
 const transactionController = require("./controllers/transactionController");
 const app = express();
 // const plantController = require('./controllers/plantController')
@@ -19,7 +20,7 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 
 // app.use() middleware here ^ ///////////////////
-app.get("/getData", stockController.getStockData);
+app.post("/getData", stockController.getStockData);
 
 //User CRUD
 app.get("/users/:id", userController.getUserByName);
@@ -45,3 +46,6 @@ app.put("/transactions/:id", transactionController.updateTransaction);
 app.delete("/transactions/:id", transactionController.deleteTransaction);
 app.get("/transactions", transactionController.getAllTransactions);
 app.post("/transactions", transactionController.createTransaction);
+
+//Ticker GET
+app.get("/tickers", tickerController.getAllTickers);
