@@ -16,6 +16,23 @@ const getStockData = async (req, res) => {
   }
 };
 
+const getStockNews = async (req, res) => {
+  console.log("123");
+  const { ticker } = req.body;
+  try {
+    const stockNews = await axios.get(
+      `https://api.polygon.io/v2/reference/news?limit=10&apiKey=${apiKey}`
+    );
+
+    console.log("stockNews", stockNews.data);
+    res.json(stockNews.data);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+
 module.exports = {
   getStockData,
+  getStockNews
 };

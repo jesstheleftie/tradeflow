@@ -20,7 +20,10 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 
 // app.use() middleware here ^ ///////////////////
+
+
 app.post("/getData", stockController.getStockData);
+app.get("/news", stockController.getStockNews);
 
 //User CRUD
 app.get("/users/:id", userController.getUserByName);
@@ -49,3 +52,4 @@ app.post("/transactions", transactionController.createTransaction);
 
 //Ticker GET
 app.get("/tickers", tickerController.getAllTickers);
+

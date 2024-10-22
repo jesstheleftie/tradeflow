@@ -11,23 +11,26 @@
       src="https://www.gstatic.com/charts/loader.js"
     ></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Righteous&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
     <div class="appContainer">
       <div class="topNav">
         <div class="appTitle">Tradeflow</div>
-        <div id="credentialsContainer"class="credentialsContainer">
+        <div id="credentialsContainer" class="credentialsContainer">
           <input id="usernameInput" placeholder="Username" />
-          <input id="pinInput" placeholder="Pin" />
+          <input id="pinInput" placeholder="Pin" autocomplete="off" type="password"/>
           <button id="loginButton">Login</button>
         </div>
         <div id="loggedInContainer" class="loggedInContainer">
-            <div id="welcomeMessage">Hi, username</div>
-            <button id="logoutButton">Log out</button>
+          <div id="welcomeMessage">Hi, username</div>
+          <button id="logoutButton">Log out</button>
         </div>
       </div>
       <div class="mainBody">
@@ -41,7 +44,10 @@
           </div>
           <div class="leftColumnBottom cardStyle">
             <div class="watchlistTitle">Watchlist</div>
-            <div id="watchlistItemContainer" class="watchlistItemContainer"></div>
+            <div
+              id="watchlistItemContainer"
+              class="watchlistItemContainer"
+            ></div>
           </div>
         </div>
         <div class="middleColumn cardStyle">
@@ -61,9 +67,31 @@
             <div id="chartContainer" class="chartBox"></div>
           </div>
 
-          <div class="middleColumnButtom">Orders</div>
+          <div class="middleColumnButtom">
+            <div class="ordersTitle">Orders</div>
+            <div class="ordersControlContainer">
+              <div class="ordersInputContainer">
+                <input id="ordersTickerInput" placeholder="Ticker" disabled />
+                <input id="ordersPriceInput" placeholder="Price" disabled />
+                <input
+                  id="ordersQtyInput"
+                  placeholder="Qty"
+                  autocomplete="off"
+                  type="number"
+                />
+              </div>
+
+              <div>
+                <button id="ordersBuyButton" class="ordersBuyButton">Buy</button>
+                <button id="ordersSellButton" class="ordersSellButton">Sell</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="rightColumn cardStyle">News</div>
+        <div class="rightColumn cardStyle">
+          <div class="newsSectionTitle">News</div>
+          <div id="newsContainer" class="newsContainer"></div>
+        </div>
       </div>
     </div>
   </body>

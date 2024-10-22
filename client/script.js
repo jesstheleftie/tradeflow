@@ -51,6 +51,17 @@ const transactionContainerElement = document.getElementById(
   "transactionContainer"
 );
 
+const ordersTickerInputElement = document.getElementById("ordersTickerInput");
+
+const ordersPriceInputElement = document.getElementById("ordersPriceInput");
+
+const ordersQtyInputElement = document.getElementById("ordersQtyInput");
+
+const ordersBuyButtonElement = document.getElementById("ordersBuyButton");
+
+const ordersSellButtonElement = document.getElementById("ordersSellButton");
+
+const newsContainerElement = document.getElementById("newsContainer");
 //Data & Values
 let searchInput = "AAPL";
 const stockData = [];
@@ -83,7 +94,8 @@ let loggedInUser = {
 
 let userWatchlist = [];
 let userTransaction = [];
-
+let ordersQtyInput = 0;
+let allNews = [];
 //Functions
 const login = async () => {
   console.log("logging in");
@@ -169,6 +181,7 @@ const getUserTransaction = async () => {
 
 const renderTransaction = () => {
   transactionContainerElement.innerHTML = "";
+
   userTransaction.forEach((eachTransaction) => {
     let newDiv = document.createElement("div");
     newDiv.classList.add("transactionItem");
@@ -239,6 +252,74 @@ const getAllStocks = async () => {
   }
 };
 
+const getAllNews = async () => {
+  try {
+    const res = await axios.get("http://localhost:3001/news");
+
+    allNews = res.data.results;
+    console.log("get news", allNews);
+  } catch (error) {}
+};
+
+const renderNews = () => {
+  newsContainerElement.innerHTML = "";
+
+  allNews.forEach((eachNews) => {
+    let newDiv = document.createElement("div");
+    newDiv.classList.add("newsItem");
+    newDiv.addEventListener("click",()=>{
+      window.open(eachNews.article_url, '_blank');
+    })
+    newDiv.innerHTML = `<div class="newsTitle">${eachNews.title}</div><div class="newsBody">${eachNews.description}</div>`;
+    newsContainerElement.appendChild(newDiv);
+  });
+};
+
+const buyStock = async () => {
+  if (ordersQtyInput <= 0 || loggedIn === false) {
+    return;
+  }
+  try {
+    const requestBody = {
+      user_id: loggedInUser._id,
+      ticker: chartTicker,
+      qty: ordersQtyInput,
+      price: chartStockPrice,
+    };
+    const res = await axios.post(
+      "http://localhost:3001/transactions",
+      requestBody
+    );
+
+    if (res) {
+      userTransaction.push(requestBody);
+      render();
+    }
+  } catch (error) {}
+};
+
+const sellStock = async () => {
+  if (ordersQtyInput <= 0 || loggedIn === false) {
+    return;
+  }
+  try {
+    const requestBody = {
+      user_id: loggedInUser._id,
+      ticker: chartTicker,
+      qty: ordersQtyInput * -1,
+      price: chartStockPrice,
+    };
+    const res = await axios.post(
+      "http://localhost:3001/transactions",
+      requestBody
+    );
+    if (res) {
+      userTransaction.push(requestBody);
+      render();
+    }
+  } catch (error) {}
+};
+
 //event listeners
 searchInputElement.addEventListener("input", (e) => {
   searchInput = e.target.value;
@@ -260,9 +341,19 @@ logoutButtonElement.addEventListener("click", () => {
   pinInput = "";
   logout();
 });
+ordersQtyInputElement.addEventListener("input", (e) => {
+  ordersQtyInput = e.target.value;
+});
+ordersBuyButtonElement.addEventListener("click", () => {
+  buyStock();
+});
+ordersSellButtonElement.addEventListener("click", () => {
+  sellStock();
+});
 
 //Run Functions
 getAllStocks();
+getAllNews();
 setTimeout(() => {
   searchStock("AAPL");
 }, 1000);
@@ -273,9 +364,11 @@ setTimeout(() => {
 //Render to frontend
 const render = () => {
   titleTickerElement.innerText = chartTicker.toUpperCase();
+  ordersTickerInputElement.placeholder = chartTicker.toUpperCase();
   titleCompanyNameElement.innerText = chartCompanyName;
   chartHeaderStockPriceElement.innerText = chartStockPrice;
-  console.log("logged in user", loggedInUser);
+  ordersPriceInputElement.placeholder = chartStockPrice;
+
   welcomeMessageElement.innerText = `Hi ${loggedInUser.username}!`;
   //login logics
   if (loggedIn) {
@@ -290,4 +383,5 @@ const render = () => {
 
   renderWatchlist();
   renderTransaction();
+  renderNews();
 };

@@ -10,24 +10,23 @@ body {
 
 .topNav {
     height: 50px;
-    background: rgb(60,60,60);
+    background: rgb(60, 60, 60);
     box-shadow: 0px 5px 10px rgb(158, 157, 157);
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.appTitle{
-    font-family: "Righteous",sans-serif;
+.appTitle {
+    font-family: "Righteous", sans-serif;
     font-weight: 400;
     font-size: 22px;
     font-style: normal;
     color: rgb(209, 162, 45)
-
 }
 
-.loggedInContainer{
-    display:flex;
+.loggedInContainer {
+    display: flex;
     align-items: center;
 }
 
@@ -38,8 +37,8 @@ body {
     width: calc(100% - 20px);
 }
 
-.cardStyle{
-    background: rgb(253,253,253);
+.cardStyle {
+    background: rgb(253, 253, 253);
     border-radius: 3px;
     box-shadow: 0px 5px 10px rgb(158, 157, 157);
 }
@@ -51,7 +50,7 @@ body {
 
 .middleColumn {
     width: calc(65% - 20px);
-    min-width: calc(100% - 550px -20px);
+    min-width: calc(100% - 550px - 20px);
     margin: 0 10px
 }
 
@@ -65,12 +64,10 @@ body {
 }
 
 .accountSummaryContainer {
-    border: 1px solid black;
     height: 80px;
 }
 
 .accountTransactionContainer {
-    border: 1px solid orange;
     height: calc(100% - 80px)
 }
 
@@ -81,27 +78,30 @@ body {
 
 
 .middleColumnTop {
-    border: 1px solid red;
     height: calc(100% - 80px);
 }
-.chartBox{
+
+.chartBox {
     height: calc(100% - 50px - 10px);
     width: 100%;
 }
 
-.chartHeaderContainer{
+.chartHeaderContainer {
     display: flex;
     align-items: center;
-    margin: 5px 10px; 
+    margin: 5px 10px;
     height: 50px;
 }
-.searchContainer{
+
+.searchContainer {
     margin-left: auto;
 }
 
 
 .middleColumnBottom {
-    border: 1px solid blue;
     height: 80px;
 }
 
+.ordersControlContainer {
+    display: flex;
+}
