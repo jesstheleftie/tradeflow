@@ -17,15 +17,15 @@
     <div class="appContainer">
       <div class="topNav">
         <div class="logo">Tradeflow</div>
-        <div class="credentialsContainer">
-          <input placeholder="Username" />
-          <input placeholder="pin" />
-          <button>Login</button>
+        <div id="credentialsContainer"class="credentialsContainer">
+          <input id="usernameInput" placeholder="Username" />
+          <input id="pinInput" placeholder="Pin" />
+          <button id="loginButton">Login</button>
         </div>
-        <!-- <div class="loggedInContainer">
-            <div>Hi, username</div>
-            <button>Log out</button>
-        </div> -->
+        <div id="loggedInContainer" class="loggedInContainer">
+            <div id="welcomeMessage">Hi, username</div>
+            <button id="logoutButton">Log out</button>
+        </div>
       </div>
       <div class="mainBody">
         <div class="leftColumn">
@@ -39,8 +39,8 @@
           <div class="middleColumnTop">
             <div class="chartHeaderContainer">
               <div class="nameTitleContainer">
-                <div>Ticker</div>
-                <div>Company Name</div>
+                <div class="titleTicker">Ticker</div>
+                <div class="titleCompanyName">Company Name</div>
               </div>
               <div class="chartHeaderStockPrice">Stock Price</div>
               <div class="searchContainer">

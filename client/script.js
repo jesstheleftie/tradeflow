@@ -64,7 +64,7 @@ google.charts.setOnLoadCallback(drawChart);
 //   ]);
 // }, 4000);
 
-//Data
+//Data & Values
 let searchInput = "AAPL";
 const stockData = [];
 let allStocks = [];
@@ -79,7 +79,53 @@ const firstRow = [
 ];
 let chartArray = [firstRow];
 const tickerAmount = 50;
+
+let chartTicker = "";
+let chartCompanyName = "";
+let chartStockPrice = 0;
+let usernameInput = "";
+let pinInput = "";
+let loggedIn = false;
+let loggedInUser = {
+  username: "",
+  pin: "",
+  transactions: [],
+  watchlistItems: [],
+};
+
 //Functions
+const login = async () => {
+  console.log("logging in");
+  const requestBody = {
+    username: usernameInput.toLowerCase(),
+    pin: pinInput,
+  };
+  try {
+    let foundUser = await axios.post(
+      "http://localhost:3001/users/login",
+      requestBody
+    );
+    if (foundUser) {
+      loggedIn = true;
+      loggedInUser = foundUser.data;
+    } else {
+      console.log("invalid");
+    }
+  } catch (err) {}
+  render();
+};
+
+const logout = () => {
+  loggedIn = false;
+  loggedInUser = {
+    username: "",
+    pin: "",
+    transactions: [],
+    watchlistItems: [],
+  };
+  render();
+};
+
 const searchStock = async (searchInput) => {
   //Check if searchInput sticker is valid
   if (!allTickers.includes(searchInput.toUpperCase())) {
@@ -88,8 +134,18 @@ const searchStock = async (searchInput) => {
   const requestBody = {
     ticker: searchInput.toUpperCase(),
   };
+
   const data = await axios.post("http://localhost:3001/getData", requestBody);
+
+  chartTicker = data.data.ticker;
+  chartCompanyName = allStocks.find((eachStock) => {
+    return eachStock.ticker === data.data.ticker;
+  }).companyName;
+
+  chartStockPrice = data.data.results[data.data.results.length - 1].c;
+
   const resArray = data.data.results;
+  console.log(data);
   chartArray = [firstRow];
   resArray
     //.slice(start from index,end at index)
@@ -111,19 +167,18 @@ const searchStock = async (searchInput) => {
         color,
       ]);
     });
-  console.log("chartArray", chartArray);
+
   drawChart(chartArray);
   //If ticker is valid, make the API call to stocks
 
   //Store the information
+  render();
 };
 
 const getAllStocks = async () => {
-  console.log("here");
   try {
-    console.log("here321");
     const res = await axios.get("http://localhost:3001/tickers");
-    console.log("all stocks", res.data);
+
     allStocks = res.data;
     allTickers = allStocks.map((stock) => {
       return stock.ticker;
@@ -132,18 +187,45 @@ const getAllStocks = async () => {
     console.error("Error", error);
   }
 };
-const renderChart = () => {};
 
 //Elements
 const searchInputElement = document.getElementById("searchInput");
 const searchButtonElement = document.getElementById("searchButton");
+const titleTickerElement = document.querySelector(".titleTicker");
+const titleCompanyNameElement = document.querySelector(".titleCompanyName");
+const chartHeaderStockPriceElement = document.querySelector(
+  ".chartHeaderStockPrice"
+);
+const usernameInputElement = document.getElementById("usernameInput");
+const pinInputElement = document.getElementById("pinInput");
+const loginButtonElement = document.getElementById("loginButton");
 
+const credentialsContainerElement = document.getElementById(
+  "credentialsContainer"
+);
+const loggedInContainerElement = document.getElementById("loggedInContainer");
+const welcomeMessageElement = document.getElementById("welcomeMessage");
+const logoutButtonElement = document.getElementById("logoutButton");
 //event listeners
 searchInputElement.addEventListener("input", (e) => {
   searchInput = e.target.value;
 });
 searchButtonElement.addEventListener("click", () => {
   searchStock(searchInput);
+});
+usernameInputElement.addEventListener("input", (e) => {
+  usernameInput = e.target.value;
+});
+pinInputElement.addEventListener("input", (e) => {
+  pinInput = e.target.value;
+});
+loginButtonElement.addEventListener("click", () => {
+  login();
+});
+logoutButtonElement.addEventListener("click", () => {
+  usernameInput = "";
+  pinInput = "";
+  logout();
 });
 
 //Run Functions
@@ -154,3 +236,22 @@ setTimeout(() => {
 setTimeout(() => {
   searchStock("TSLA");
 }, 5000);
+
+//Render to frontend
+const render = () => {
+  titleTickerElement.innerText = chartTicker.toUpperCase();
+  titleCompanyNameElement.innerText = chartCompanyName;
+  chartHeaderStockPriceElement.innerText = chartStockPrice;
+  console.log("logged in user", loggedInUser);
+  welcomeMessageElement.innerText = `Hi ${loggedInUser.username}!`;
+  //login logics
+  if (loggedIn) {
+    credentialsContainerElement.style.display = "none";
+    loggedInContainerElement.style.display = "inherit";
+  } else {
+    credentialsContainerElement.style.display = "inherit";
+    loggedInContainerElement.style.display = "none";
+  }
+  usernameInputElement.value = usernameInput;
+  pinInputElement.value = pinInput;
+};
