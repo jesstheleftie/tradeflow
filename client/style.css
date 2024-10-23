@@ -1,4 +1,5 @@
 body {
+    user-select: none;
     margin: 0;
 }
 
@@ -10,7 +11,8 @@ body {
 
 .topNav {
     height: 50px;
-    background: rgb(60, 60, 60);
+    /* background: rgb(60, 60, 60); */
+    background: linear-gradient(to bottom, #202020, #494949);
     box-shadow: 0px 5px 10px rgb(158, 157, 157);
     display: flex;
     align-items: center;
@@ -22,12 +24,33 @@ body {
     font-weight: 400;
     font-size: 22px;
     font-style: normal;
-    color: rgb(209, 162, 45)
+    color: rgb(209, 162, 45);
+    padding-left: 20px;
+}
+
+.credentialsContainer {
+    margin-right: 15px;
+
 }
 
 .loggedInContainer {
-    display: flex;
+    margin-right: 15px;
+    display: none;
     align-items: center;
+}
+
+.loginButton {
+    font-family: "roboto", sans-serif;
+}
+
+.logoutButton {
+    font-family: "roboto", sans-serif;
+}
+
+#welcomeMessage {
+    color: white;
+    font-family: "Roboto", sans-serif;
+
 }
 
 .mainBody {
@@ -35,6 +58,8 @@ body {
     display: flex;
     margin: 10px;
     width: calc(100% - 20px);
+
+
 }
 
 .cardStyle {
@@ -44,14 +69,31 @@ body {
 }
 
 .leftColumn {
-    width: 15%;
+    width: 0%;
     max-width: 250px;
 }
 
+.watchlistItem {
+    padding: 5px 10px;
+    border-bottom: 1px solid rgb(200, 200, 200);
+    margin: 0 5px;
+    cursor: pointer;
+
+}
+
+.watchlistItem:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+.watchlistItemContainer {
+    max-height: calc(100% - 40px);
+    overflow-y: auto;
+}
+
 .middleColumn {
-    width: calc(65% - 20px);
-    min-width: calc(100% - 550px - 20px);
-    margin: 0 10px
+    width: calc(80% - 10px);
+    min-width: calc(100% - 300px - 20px);
+    margin: 0 10px 0 0;
 }
 
 .rightColumn {
@@ -60,48 +102,296 @@ body {
 }
 
 .leftColumnTop {
-    height: 40%
+    height: 40%;
+
 }
 
-.accountSummaryContainer {
-    height: 80px;
+.watchlistTitle {
+    font-family: "Roboto", san-serif;
+    font-weight: 500;
+    font-style: normal;
+    padding: 10px 15px;
+    border-bottom: 1px solid rgb(200, 200, 200);
+}
+
+.watchlistItemTicker {
+    font-weight: bold;
+    font-size: 12px;
+    font-family: "Roboto", san-serif;
+}
+
+.watchlistItemCompanyName {
+    font-family: "Roboto", san-serif;
+    font-size: 10px;
+    color: rgb(136, 132, 132)
 }
 
 .accountTransactionContainer {
-    height: calc(100% - 80px)
+    height: 100%
 }
+
 
 .leftColumnBottom {
     height: calc(60% - 10px);
     margin-top: 10px;
 }
 
+.transactionContainer {
+    max-height: calc(100% - 40px);
+    overflow-y: auto;
+}
+
+.transactionTitle {
+    font-family: "Roboto", san-serif;
+    font-weight: 500;
+    font-style: normal;
+    padding: 10px 15px;
+    border-bottom: 1px solid rgb(200, 200, 200);
+}
+
+.transactionItem {
+    padding: 5px 10px;
+    border-bottom: 1px solid rgb(200, 200, 200);
+    margin: 0 5px;
+
+}
+
+
+
+.transactionTicker {
+    font-weight: bold;
+    font-size: 12px;
+    font-family: "Roboto", san-serif;
+    display: flex;
+    justify-content: space-between;
+}
+
+.transactionShareQty {
+    font-family: "Roboto", san-serif;
+    font-size: 10px;
+    color: rgb(136, 132, 132)
+}
+
+.buySellIndicator {
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.transactionSharePrice {
+    font-family: "Roboto", san-serif;
+    font-size: 10px;
+    color: rgb(136, 132, 132)
+}
+
+.transactionDate {
+    font-family: "Roboto", san-serif;
+    font-size: 10px;
+    color: rgb(136, 132, 132)
+}
 
 .middleColumnTop {
-    height: calc(100% - 80px);
+    height: calc(100% - 60px - 10px);
 }
 
 .chartBox {
-    height: calc(100% - 50px - 10px);
+    height: calc(100% - 50px - 20px);
     width: 100%;
+}
+
+
+#chartContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .chartHeaderContainer {
     display: flex;
-    align-items: center;
-    margin: 5px 10px;
+    align-items: start;
+    margin: 10px 10px;
     height: 50px;
 }
 
-.searchContainer {
-    margin-left: auto;
+.middleColumnButtom {
+    height: 60px;
+    padding: 0 15px;
 }
 
 
-.middleColumnBottom {
-    height: 80px;
+.nameTitleContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.tickerPriceCombo {
+    display: flex
+}
+
+.addToWatchListButton {
+    cursor: pointer;
+}
+
+.titleTicker {
+    margin-left: 5px;
+    line-height: 30px;
+    font-size: 36px;
+    font-weight: 500;
+    font-family: "Roboto", sans-serif;
+}
+
+.titleCompanyName {
+    margin-left: 5px;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+    color: rgb(100, 100, 100);
+}
+
+
+
+.chartHeaderStockPrice {
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+    text-align: right;
+    color: rgb(30, 30, 30)
+}
+
+.autocompleteItem {
+    z-index: 3;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    padding: 0 5px;
+
+}
+
+.autocompleteItem:hover {
+    background-color: rgb(240, 240, 240);
+}
+
+
+
+.searchDropDown {
+    background-color: rgb(250, 250, 250);
+}
+
+.searchContainer {
+    z-index: 3;
+    margin-left: auto;
+    display: flex;
+}
+
+.themeButton {
+    height: 21px;
+    background: rgb(209, 162, 45);
+    border-radius: 3px;
+    color: white;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold
+}
+
+.themeButton:hover {
+
+    background: rgb(222, 171, 43);
+
+}
+
+
+
+.ordersTitle {
+    font-family: "Roboto", san-serif;
+    font-weight: 500;
+    font-style: normal;
+
+
 }
 
 .ordersControlContainer {
     display: flex;
+
+}
+
+.ordersBuyButton {
+    background-color: rgb(129, 190, 37);
+    height: 21px;
+    border-radius: 3px;
+    color: white;
+    outline: none;
+    border: none;
+    font-weight: bold;
+    opacity: 0.25
+}
+
+.ordersBuyButton:hover {
+    background-color: rgb(113, 180, 14);
+
+}
+
+.ordersSellButton {
+    background-color: rgb(237, 9, 9);
+    height: 21px;
+    border-radius: 3px;
+    color: white;
+    outline: none;
+    border: none;
+    font-weight: bold;
+    opacity: 0.25
+}
+
+.ordersSellButton:hover {
+    background-color: rgb(255, 0, 0);
+}
+
+.rightColumn {
+    width: 20%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+
+    max-height: calc(100vh - 60px);
+    border-left: 1px solid rgb(200, 200, 200);
+}
+
+.newsContainer {
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+
+}
+
+.newsSectionTitle {
+    font-family: "Roboto", san-serif;
+    font-weight: 500;
+    font-style: normal;
+    padding: 10px 15px;
+    border-bottom: 1px solid rgb(200, 200, 200);
+}
+
+.newsItem {
+    padding: 10px 20px;
+    border-bottom: 1px solid rgb(220, 220, 220);
+    cursor: pointer;
+}
+
+.newsItem:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+.newsTitle {
+    font-size: 12px;
+    font-weight: 700;
+    font-family: "Roboto", sans-serif;
+    color: rgb(34, 34, 34);
+    margin-bottom: 5px;
+}
+
+.newsBody {
+    font-size: 10px;
+    font-family: "Roboto", sans-serif;
+    color: rgb(80, 80, 80);
+    line-height: 1.5;
 }

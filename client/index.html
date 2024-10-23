@@ -17,6 +17,12 @@
       href="https://fonts.googleapis.com/css2?family=Righteous&display=swap"
       rel="stylesheet"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
@@ -24,44 +30,61 @@
       <div class="topNav">
         <div class="appTitle">Tradeflow</div>
         <div id="credentialsContainer" class="credentialsContainer">
-          <input id="usernameInput" placeholder="Username" />
-          <input id="pinInput" placeholder="Pin" autocomplete="off" type="password"/>
-          <button id="loginButton">Login</button>
+          <input id="usernameInput" placeholder="Username" />&nbsp;&nbsp;
+          <input
+            id="pinInput"
+            placeholder="Pin"
+            autocomplete="off"
+            type="password"
+          />&nbsp;&nbsp;
+          <button id="loginButton" class="themeButton">Login</button>
         </div>
         <div id="loggedInContainer" class="loggedInContainer">
           <div id="welcomeMessage">Hi, username</div>
-          <button id="logoutButton">Log out</button>
+          &nbsp;&nbsp;
+          <button id="logoutButton" class="themeButton">Logout</button>
         </div>
       </div>
       <div class="mainBody">
         <div class="leftColumn">
           <div class="leftColumnTop cardStyle">
-            <div class="accountSummaryContainer">Summary</div>
-            <div class="accountTransactionContainer">
-              <div class="transactionTitle">Transactions</div>
-              <div id="transactionContainer" class="transactionContainer"></div>
-            </div>
-          </div>
-          <div class="leftColumnBottom cardStyle">
             <div class="watchlistTitle">Watchlist</div>
             <div
               id="watchlistItemContainer"
               class="watchlistItemContainer"
             ></div>
           </div>
+          <div class="leftColumnBottom cardStyle">
+            <div class="accountTransactionContainer">
+              <div class="transactionTitle">Transactions</div>
+              <div id="transactionContainer" class="transactionContainer"></div>
+            </div>
+          </div>
         </div>
+
         <div class="middleColumn cardStyle">
           <div class="middleColumnTop">
             <div class="chartHeaderContainer">
               <div class="nameTitleContainer">
-                <div class="titleTicker">Ticker</div>
+                <div class="tickerPriceCombo">
+                  <div id="addToWatchlistButton" class="addToWatchListButton">
+                    Fav
+                  </div>
+
+                  <div class="titleTicker">Ticker</div>
+                  &nbsp;&nbsp;
+                  <div class="chartHeaderStockPrice">Stock Price</div>
+                </div>
                 <div class="titleCompanyName">Company Name</div>
               </div>
-              <div class="chartHeaderStockPrice">Stock Price</div>
+
               <div class="searchContainer">
-                <input id="searchInput" /><button id="searchButton">
-                  Search
-                </button>
+                <div>
+                  <input id="searchInput" autocomplete="off" />
+                  <div id="searchDropDown" class="searchDropDown"></div>
+                </div>
+                &nbsp;
+                <button id="searchButton" class="themeButton">Search</button>
               </div>
             </div>
             <div id="chartContainer" class="chartBox"></div>
@@ -78,18 +101,24 @@
                   placeholder="Qty"
                   autocomplete="off"
                   type="number"
+                  disabled
                 />
               </div>
 
               <div>
-                <button id="ordersBuyButton" class="ordersBuyButton">Buy</button>
-                <button id="ordersSellButton" class="ordersSellButton">Sell</button>
+                &nbsp;
+                <button id="ordersBuyButton" class="ordersBuyButton">
+                  Buy
+                </button>
+                <button id="ordersSellButton" class="ordersSellButton">
+                  Sell
+                </button>
               </div>
             </div>
           </div>
         </div>
         <div class="rightColumn cardStyle">
-          <div class="newsSectionTitle">News</div>
+          <div class="newsSectionTitle">Market News</div>
           <div id="newsContainer" class="newsContainer"></div>
         </div>
       </div>

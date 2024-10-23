@@ -6,7 +6,7 @@ const getStockData = async (req, res) => {
   const { ticker } = req.body;
   try {
     const stockData = await axios.get(
-      `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/10/minute/2024-10-16/2024-10-16?adjusted=true&sort=asc&apiKey=${apiKey}`
+      `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/10/minute/2024-10-22/2024-10-22?adjusted=true&sort=asc&apiKey=${apiKey}`
     );
 
     console.log("stockData", stockData.data);
@@ -21,7 +21,7 @@ const getStockNews = async (req, res) => {
   const { ticker } = req.body;
   try {
     const stockNews = await axios.get(
-      `https://api.polygon.io/v2/reference/news?limit=10&apiKey=${apiKey}`
+      `https://api.polygon.io/v2/reference/news?limit=30&apiKey=${apiKey}`
     );
 
     console.log("stockNews", stockNews.data);
@@ -31,8 +31,7 @@ const getStockNews = async (req, res) => {
   }
 };
 
-
 module.exports = {
   getStockData,
-  getStockNews
+  getStockNews,
 };
