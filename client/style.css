@@ -12,12 +12,13 @@ body {
 .topNav {
     height: 50px;
     /* background: rgb(60, 60, 60); */
-    background: linear-gradient(to bottom, #202020, #494949);
-    box-shadow: 0px 5px 10px rgb(158, 157, 157);
+    background: linear-gradient(to bottom, #202020, #353535);
+    /* box-shadow: 0px 5px 10px rgb(158, 157, 157); */
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
+
 
 .appTitle {
     font-family: "Righteous", sans-serif;
@@ -62,10 +63,67 @@ body {
 
 }
 
-.cardStyle {
+.cardStyleLight {
     background: rgb(253, 253, 253);
     border-radius: 3px;
     box-shadow: 0px 5px 10px rgb(158, 157, 157);
+}
+
+.cardStyleDark {
+    /* background: rgb(253, 253, 253); */
+    border-radius: 3px;
+    /* box-shadow: 0px 5px 10px rgb(158, 157, 157); */
+}
+
+
+.lightMode {
+    background: rgb(253, 253, 253);
+    color: 'black'
+}
+
+.lightModeButton {
+    background: rgb(253, 253, 253);
+    color: 'black'
+}
+
+.lightModeButton:hover {
+
+    background: rgb(236, 236, 236);
+}
+
+.darkMode {
+    background: rgb(40, 40, 40);
+    color: rgb(245, 242, 211)
+}
+
+.darkModeButton {
+    background: rgb(40, 40, 40);
+    color: rgb(245, 242, 211)
+}
+
+.darkModeButton:hover {
+    background: rgb(51, 51, 51);
+}
+
+#flipMode1 {
+    display: flex;
+    align-items: center;
+    cursor: pointer
+}
+
+#flipMode2 {
+    display: flex;
+    align-items: center;
+    cursor: pointer
+}
+
+.flipIconLight {
+    max-height: 20px;
+    transform: scale(1.3)
+}
+
+.flipIconDark {
+    max-height: 20px
 }
 
 .leftColumn {
@@ -75,15 +133,15 @@ body {
 
 .watchlistItem {
     padding: 5px 10px;
-    border-bottom: 1px solid rgb(200, 200, 200);
+    border-bottom: 1px solid rgb(150, 150, 150);
     margin: 0 5px;
     cursor: pointer;
 
 }
 
-.watchlistItem:hover {
+/* .watchlistItem:hover {
     background-color: rgb(245, 245, 245);
-}
+} */
 
 .watchlistItemContainer {
     max-height: calc(100% - 40px);
@@ -99,6 +157,9 @@ body {
 .rightColumn {
     width: 20%;
     max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 60px);
 }
 
 .leftColumnTop {
@@ -111,7 +172,7 @@ body {
     font-weight: 500;
     font-style: normal;
     padding: 10px 15px;
-    border-bottom: 1px solid rgb(200, 200, 200);
+    border-bottom: 1px solid rgb(150, 150, 150);
 }
 
 .watchlistItemTicker {
@@ -146,12 +207,12 @@ body {
     font-weight: 500;
     font-style: normal;
     padding: 10px 15px;
-    border-bottom: 1px solid rgb(200, 200, 200);
+    border-bottom: 1px solid rgb(150, 150, 150);
 }
 
 .transactionItem {
     padding: 5px 10px;
-    border-bottom: 1px solid rgb(200, 200, 200);
+    border-bottom: 1px solid rgb(150, 150, 150);
     margin: 0 5px;
 
 }
@@ -255,7 +316,7 @@ body {
     font-weight: 400;
     font-family: "Roboto", sans-serif;
     text-align: right;
-    color: rgb(30, 30, 30)
+    /* color: rgb(30, 30, 30) */
 }
 
 .autocompleteItem {
@@ -266,14 +327,14 @@ body {
 
 }
 
-.autocompleteItem:hover {
+/* .autocompleteItem:hover {
     background-color: rgb(240, 240, 240);
-}
+} */
 
 
 
 .searchDropDown {
-    background-color: rgb(250, 250, 250);
+    /* background-color: rgb(250, 250, 250); */
 }
 
 .searchContainer {
@@ -345,15 +406,7 @@ body {
     background-color: rgb(255, 0, 0);
 }
 
-.rightColumn {
-    width: 20%;
-    max-width: 300px;
-    display: flex;
-    flex-direction: column;
 
-    max-height: calc(100vh - 60px);
-    border-left: 1px solid rgb(200, 200, 200);
-}
 
 .newsContainer {
     display: flex;
@@ -368,30 +421,34 @@ body {
     font-weight: 500;
     font-style: normal;
     padding: 10px 15px;
-    border-bottom: 1px solid rgb(200, 200, 200);
+    border-bottom: 1px solid rgb(150, 150, 150);
 }
 
 .newsItem {
-    padding: 10px 20px;
-    border-bottom: 1px solid rgb(220, 220, 220);
+    margin: 0 5px;
+    padding: 10px 10px;
+    border-bottom: 1px solid rgb(150, 150, 150);
     cursor: pointer;
 }
 
+/* 
 .newsItem:hover {
     background-color: rgb(245, 245, 245);
-}
+} */
 
 .newsTitle {
     font-size: 12px;
     font-weight: 700;
     font-family: "Roboto", sans-serif;
-    color: rgb(34, 34, 34);
+    /* color: rgb(34, 34, 34); */
     margin-bottom: 5px;
+    background-color: transparent;
 }
 
 .newsBody {
     font-size: 10px;
     font-family: "Roboto", sans-serif;
-    color: rgb(80, 80, 80);
+    /* color: rgb(80, 80, 80); */
     line-height: 1.5;
+    background-color: transparent;
 }

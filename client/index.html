@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="style.css" />
     <script defer src="./script.js"></script>
     <title class="brandTitle">Tradeflow</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
     <script
       type="text/javascript"
       src="https://www.gstatic.com/charts/loader.js"
@@ -29,7 +30,10 @@
     <div class="appContainer">
       <div class="topNav">
         <div class="appTitle">Tradeflow</div>
+
         <div id="credentialsContainer" class="credentialsContainer">
+          <span id="flipMode1"></span>
+          &nbsp;&nbsp;
           <input id="usernameInput" placeholder="Username" />&nbsp;&nbsp;
           <input
             id="pinInput"
@@ -40,21 +44,22 @@
           <button id="loginButton" class="themeButton">Login</button>
         </div>
         <div id="loggedInContainer" class="loggedInContainer">
+          <span id="flipMode2"></span>&nbsp;&nbsp;
           <div id="welcomeMessage">Hi, username</div>
-          &nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;
           <button id="logoutButton" class="themeButton">Logout</button>
         </div>
       </div>
       <div class="mainBody">
         <div class="leftColumn">
-          <div class="leftColumnTop cardStyle">
+          <div class="leftColumnTop cardStyleLight lightMode">
             <div class="watchlistTitle">Watchlist</div>
             <div
               id="watchlistItemContainer"
               class="watchlistItemContainer"
             ></div>
           </div>
-          <div class="leftColumnBottom cardStyle">
+          <div class="leftColumnBottom cardStyleLight lightMode">
             <div class="accountTransactionContainer">
               <div class="transactionTitle">Transactions</div>
               <div id="transactionContainer" class="transactionContainer"></div>
@@ -62,26 +67,30 @@
           </div>
         </div>
 
-        <div class="middleColumn cardStyle">
+        <div class="middleColumn cardStyleLight lightMode">
           <div class="middleColumnTop">
             <div class="chartHeaderContainer">
               <div class="nameTitleContainer">
                 <div class="tickerPriceCombo">
-                  <div id="addToWatchlistButton" class="addToWatchListButton">
-                    Fav
-                  </div>
+                  <div
+                    id="addToWatchlistButton"
+                    class="addToWatchListButton"
+                  ></div>
 
-                  <div class="titleTicker">Ticker</div>
+                  <div class="titleTicker"></div>
                   &nbsp;&nbsp;
-                  <div class="chartHeaderStockPrice">Stock Price</div>
+                  <div class="chartHeaderStockPrice lightMode"></div>
                 </div>
-                <div class="titleCompanyName">Company Name</div>
+                <div class="titleCompanyName"></div>
               </div>
 
               <div class="searchContainer">
                 <div>
                   <input id="searchInput" autocomplete="off" />
-                  <div id="searchDropDown" class="searchDropDown"></div>
+                  <div
+                    id="searchDropDown"
+                    class="searchDropDown lightMode"
+                  ></div>
                 </div>
                 &nbsp;
                 <button id="searchButton" class="themeButton">Search</button>
@@ -117,7 +126,7 @@
             </div>
           </div>
         </div>
-        <div class="rightColumn cardStyle">
+        <div class="rightColumn cardStyleLight lightMode">
           <div class="newsSectionTitle">Market News</div>
           <div id="newsContainer" class="newsContainer"></div>
         </div>

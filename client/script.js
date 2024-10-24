@@ -1,4 +1,7 @@
 //Elements
+const appContainerElement = document.querySelector(".appContainer");
+const topNavElement = document.querySelector(".topNav");
+
 const leftColumnElement = document.querySelector(".leftColumn");
 const middleColumnElement = document.querySelector(".middleColumn");
 const rightColumnElement = document.querySelector(".rightColumn");
@@ -51,7 +54,15 @@ const addToWashlistButtonElement = document.getElementById(
   "addToWatchlistButton"
 );
 
+const flipMode1Element = document.getElementById("flipMode1");
+const flipMode2Element = document.getElementById("flipMode2");
+
+const cardStyleLightElements = document.querySelectorAll(".cardStyleLight");
+
+const cardStyleDarkElements = document.querySelectorAll(".cardStyleDark");
+
 //Data & Values
+let themeMode = "light";
 let searchInput = "AAPL";
 const stockData = [];
 let allStocks = [];
@@ -86,6 +97,7 @@ let ordersQtyInput = 0;
 let allNews = [];
 
 //Functions
+//Login Logout
 const login = async () => {
   const requestBody = {
     username: usernameInput.toLowerCase(),
@@ -127,6 +139,7 @@ const logout = () => {
   render();
 };
 
+//Watchlist
 const getUserWatchlist = async () => {
   if (loggedIn) {
     try {
@@ -141,10 +154,13 @@ const getUserWatchlist = async () => {
 
 const renderWatchlist = () => {
   watchlistItemContainerElement.innerHTML = "";
-  console.log("userWatchlist", userWatchlist);
   userWatchlist.forEach((eachStock) => {
     let newDiv = document.createElement("div");
     newDiv.classList.add("watchlistItem");
+    newDiv.classList.add(
+      `${themeMode === "light" ? "lightModeButton" : "darkModeButton"}`
+    );
+
     newDiv.innerHTML = `
 <div class="watchlistItemTicker">${eachStock.ticker}</div>
 <div class="watchlistItemCompanyName">${eachStock.companyName}</div>
@@ -157,6 +173,7 @@ const renderWatchlist = () => {
   });
 };
 
+//Transactions
 const getUserTransaction = async () => {
   if (loggedIn) {
     try {
@@ -167,7 +184,6 @@ const getUserTransaction = async () => {
     } catch (error) {}
   }
   render();
-  console.log("user transaction", userTransaction);
 };
 
 const renderTransaction = () => {
@@ -194,10 +210,24 @@ const renderTransaction = () => {
     });
 };
 
+//Stocks
+const getAllStocks = async () => {
+  try {
+    const res = await axios.get("http://localhost:3001/tickers");
+
+    allStocks = res.data;
+    allTickers = allStocks.map((stock) => {
+      return stock.ticker;
+    });
+  } catch (error) {
+    console.error("Error", error);
+  }
+};
+
 const searchStock = async (searchInput) => {
   searchDropDownElement.innerHTML = "";
 
-  //Check if searchInput sticker is valid
+  //Check if searchInput ticker is valid
   if (!allTickers.includes(searchInput.toUpperCase())) {
     return;
   }
@@ -216,10 +246,10 @@ const searchStock = async (searchInput) => {
 
     const resArray = data.data.results;
     chartArray = [firstRow];
-    const tickerAmount = 50;
+    const barAmount = 50;
     resArray
       //.slice(start from index,end at index)
-      .slice(resArray.length - (tickerAmount + 1), resArray.length - 1)
+      .slice(resArray.length - (barAmount + 1), resArray.length - 1)
       .forEach((eachCandle) => {
         let color = "black";
         if (eachCandle.o - eachCandle.c > 0) {
@@ -245,42 +275,31 @@ const searchStock = async (searchInput) => {
   //Store the information
 };
 
-const getAllStocks = async () => {
-  try {
-    const res = await axios.get("http://localhost:3001/tickers");
-
-    allStocks = res.data;
-    allTickers = allStocks.map((stock) => {
-      return stock.ticker;
-    });
-  } catch (error) {
-    console.error("Error", error);
-  }
-};
-
+//News
 const getAllNews = async () => {
   try {
     const res = await axios.get("http://localhost:3001/news");
-
     allNews = res.data.results;
-    console.log("get news", allNews);
+    renderNews();
   } catch (error) {}
 };
-
 const renderNews = () => {
   newsContainerElement.innerHTML = "";
 
   allNews.forEach((eachNews) => {
     let newDiv = document.createElement("div");
     newDiv.classList.add("newsItem");
+    newDiv.classList.add(
+      `${themeMode === "light" ? "lightModeButton" : "darkModeButton"}`
+    );
     newDiv.addEventListener("click", () => {
       window.open(eachNews.article_url, "_blank");
     });
-    newDiv.innerHTML = `<div><img style='max-height:40px; max-width:100%' src='${eachNews.image_url}'/></div><div class="newsTitle">${eachNews.title}</div><div class="newsBody">${eachNews.description}</div>`;
+    newDiv.innerHTML = `<div><img style='max-height:40px; max-width:100%' src='${eachNews.image_url}'/></div><div class="newsTitle ">${eachNews.title}</div><div class="newsBody ">${eachNews.description}</div>`;
     newsContainerElement.appendChild(newDiv);
   });
 };
-
+//Buy and sell
 const buyStock = async () => {
   if (ordersQtyInput <= 0 || loggedIn === false) {
     return;
@@ -328,11 +347,12 @@ const sellStock = async () => {
   } catch (error) {}
 };
 
+//Dropdown suggest
 const autoSuggest = (tickerString) => {
   searchDropDownElement.innerHTML = "";
   const filterSuggestions = allStocks.filter((eachStock) => {
     if (tickerString.length > 0) {
-      return eachStock.ticker.includes(tickerString);
+      return eachStock.ticker.startsWith(tickerString);
     }
   });
   filterSuggestions
@@ -343,9 +363,10 @@ const autoSuggest = (tickerString) => {
     .forEach((suggestion) => {
       const newDiv = document.createElement("div");
       newDiv.classList.add("autocompleteItem");
-      newDiv.innerHTML = `
-  <div class="autocompleteItemTicker">${suggestion.ticker}</div>
-  `;
+      newDiv.classList.add(
+        `${themeMode === "light" ? "lightModeButton" : "darkModeButton"}`
+      );
+      newDiv.innerHTML = `<div class="autocompleteItemTicker">${suggestion.ticker}</div>`;
       // <div class="autocompleteItemCompanyName">${suggestion.companyName}</div>
       newDiv.addEventListener("click", () => {
         searchStock(suggestion.ticker);
@@ -355,6 +376,8 @@ const autoSuggest = (tickerString) => {
       searchDropDownElement.appendChild(newDiv);
     });
 };
+
+//Bookmark
 const favouriteClick = async () => {
   if (loggedIn === false) {
     return;
@@ -398,40 +421,40 @@ const favouriteClick = async () => {
       userWatchlist.push(addedWatchlistStock.data.watchlist);
     }
   }
-
   render();
 };
 
+//Adjust columns and some button behaviours when logged in or out
 const loginRenderLogics = () => {
   if (loggedIn) {
+    //Column sizings when logged in
     leftColumnElement.style.width = "15%";
     leftColumnElement.style.maxWidth = "250px";
-
     middleColumnElement.style.width = "calc(65% - 20px)";
     middleColumnElement.style.minWidth = "calc(100% - 550px - 20px)";
     middleColumnElement.style.margin = "0 10px";
-    //enable buttons also
+    //Enable buy sell buttons also
     ordersBuyButtonElement.style.opacity = 1;
     ordersBuyButtonElement.style.cursor = "pointer";
     ordersSellButtonElement.style.opacity = 1;
     ordersSellButtonElement.style.cursor = "pointer";
     ordersQtyInputElement.disabled = false;
-    //The Flag
+    //Show bookmark icon when logged in
     addToWatchlistButtonElement.style.display = "inherit";
   } else {
+    //Column sizings when logged out
     leftColumnElement.style.width = "0%";
     leftColumnElement.style.maxWidth = "250px";
-
     middleColumnElement.style.width = "calc(80% - 10px)";
     middleColumnElement.style.minWidth = "calc(100% - 300px - 20px)";
     middleColumnElement.style.margin = "0 10px 0 0";
-    //disabled buttons also
+    //Disabled buy sell buttons also
     ordersBuyButtonElement.style.opacity = 0.25;
     ordersBuyButtonElement.style.cursor = "default";
     ordersSellButtonElement.style.opacity = 0.25;
     ordersSellButtonElement.style.cursor = "default";
     ordersQtyInputElement.disabled = true;
-    //The Flag
+    //Show bookmark icon when logged out
     addToWatchlistButtonElement.style.display = "none";
   }
 };
@@ -455,11 +478,11 @@ const drawChart = (input) => {
     hAxis: {
       gridlines: { color: "none", maxCount: 20 },
       format: "HH:mm",
-      textStyle: { fontSize: 10 },
+      textStyle: { fontSize: 10, color: "rgb(150,150,150)" },
     },
     vAxis: {
       gridlines: { color: "none" },
-      textStyle: { fontSize: 10 },
+      textStyle: { fontSize: 10, color: "rgb(150,150,150)" },
     },
   };
 
@@ -472,71 +495,92 @@ const drawChart = (input) => {
     chart.draw(data, options);
   });
 };
-
 google.charts.load("current", { packages: ["corechart"] });
 google.charts.setOnLoadCallback(drawChart);
 
-//event listeners
-
+//Event listeners
+//Stock search input
 searchInputElement.addEventListener("input", (e) => {
   searchInput = e.target.value;
   autoSuggest(e.target.value.toUpperCase());
 });
+//Search Button
 searchButtonElement.addEventListener("click", () => {
   searchStock(searchInput);
 });
+//Username input
 usernameInputElement.addEventListener("input", (e) => {
   usernameInput = e.target.value;
 });
+//Pin input
 pinInputElement.addEventListener("input", (e) => {
   pinInput = e.target.value;
 });
+//Login button
 loginButtonElement.addEventListener("click", () => {
   login();
 });
+//Logout button
 logoutButtonElement.addEventListener("click", () => {
   usernameInput = "";
   pinInput = "";
   logout();
 });
+//Orders qty input
 ordersQtyInputElement.addEventListener("input", (e) => {
   ordersQtyInput = e.target.value;
 });
+//Buy button
 ordersBuyButtonElement.addEventListener("click", () => {
   buyStock();
 });
+//Sell button
 ordersSellButtonElement.addEventListener("click", () => {
   sellStock();
 });
+//Bookmark button
 addToWatchlistButtonElement.addEventListener("click", () => {
   favouriteClick();
 });
+//Flip light and dark mode button in non logged in mode
+flipMode1Element.addEventListener("click", () => {
+  if (themeMode === "light") {
+    themeMode = "dark";
+  } else {
+    themeMode = "light";
+  }
+  render();
+});
+//Flip light and dark mode button in logged in mode
+flipMode2Element.addEventListener("click", () => {
+  if (themeMode === "light") {
+    themeMode = "dark";
+  } else {
+    themeMode = "light";
+  }
+  render();
+});
 
-//Run Functions
-setTimeout(() => {
-  getAllStocks();
-  getAllNews();
-}, 1000);
-
-setTimeout(() => {
-  searchStock("AAPL");
-}, 2000);
-// setTimeout(() => {
-//   searchStock("TSLA");
-// }, 5000);
-
-//Render to frontend
+//Render to page
 const render = () => {
+  //Title render
   titleTickerElement.innerText = chartTicker.toUpperCase();
+  //Order ticker input box render
   ordersTickerInputElement.placeholder = chartTicker.toUpperCase();
+  //Title company name update
   titleCompanyNameElement.innerText = chartCompanyName;
+  //Title stock price render
   chartHeaderStockPriceElement.innerText = "$" + chartStockPrice;
+  //Order price box update
   ordersPriceInputElement.placeholder = chartStockPrice;
+  //Order qty box update
   ordersQtyInputElement.value = ordersQtyInput;
+  //Update welcome message in nav
   welcomeMessageElement.innerText = `Hi, ${loggedInUser.username}!`;
-
+  //Update search input box
   searchInputElement.innerText = searchInput;
-  //login logics
+
+  //login element show and hide
   if (loggedIn) {
     credentialsContainerElement.style.display = "none";
     loggedInContainerElement.style.display = "flex";
@@ -550,6 +594,7 @@ const render = () => {
   usernameInputElement.value = usernameInput;
   pinInputElement.value = pinInput;
 
+  //Change svg between bookmarked and not bookmarked
   if (
     userWatchlist.filter((eachWatchlistStock) => {
       return eachWatchlistStock.ticker === chartTicker;
@@ -558,12 +603,86 @@ const render = () => {
     addToWashlistButtonElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 50 50"> <path d="M 37 48 C 36.824219 48 36.652344 47.953125 36.496094 47.863281 L 25 41.15625 L 13.503906 47.863281 C 13.195313 48.042969 12.8125 48.046875 12.503906 47.867188 C 12.191406 47.6875 12 47.359375 12 47 L 12 3 C 12 2.449219 12.449219 2 13 2 L 37 2 C 37.554688 2 38 2.449219 38 3 L 38 47 C 38 47.359375 37.808594 47.6875 37.496094 47.867188 C 37.34375 47.957031 37.171875 48 37 48 Z" fill="rgb(209, 162, 45)"></path> </svg>
 `;
   } else {
-    addToWashlistButtonElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 50 50">
-<path d="M 12.8125 2 C 12.335938 2.089844 11.992188 2.511719 12 3 L 12 47 C 11.996094 47.359375 12.1875 47.691406 12.496094 47.871094 C 12.804688 48.054688 13.1875 48.054688 13.5 47.875 L 25 41.15625 L 36.5 47.875 C 36.8125 48.054688 37.195313 48.054688 37.503906 47.871094 C 37.8125 47.691406 38.003906 47.359375 38 47 L 38 3 C 38 2.449219 37.550781 2 37 2 L 13 2 C 12.96875 2 12.9375 2 12.90625 2 C 12.875 2 12.84375 2 12.8125 2 Z M 14 4 L 36 4 L 36 45.25 L 25.5 39.125 C 25.191406 38.945313 24.808594 38.945313 24.5 39.125 L 14 45.25 Z"></path>
+    addToWashlistButtonElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 50 50" >
+<path d="M 12.8125 2 C 12.335938 2.089844 11.992188 2.511719 12 3 L 12 47 C 11.996094 47.359375 12.1875 47.691406 12.496094 47.871094 C 12.804688 48.054688 13.1875 48.054688 13.5 47.875 L 25 41.15625 L 36.5 47.875 C 36.8125 48.054688 37.195313 48.054688 37.503906 47.871094 C 37.8125 47.691406 38.003906 47.359375 38 47 L 38 3 C 38 2.449219 37.550781 2 37 2 L 13 2 C 12.96875 2 12.9375 2 12.90625 2 C 12.875 2 12.84375 2 12.8125 2 Z M 14 4 L 36 4 L 36 45.25 L 25.5 39.125 C 25.191406 38.945313 24.808594 38.945313 24.5 39.125 L 14 45.25 Z" fill='${
+      themeMode === "light" ? "rgb(0,0,0)" : "rgb(245, 242, 211)"
+    }'></path>
 </svg>`;
   }
 
   renderWatchlist();
   renderTransaction();
-  renderNews();
+
+  //Change theme between light and dark
+  if (themeMode === "dark") {
+    //Make all elements light
+    document.querySelectorAll(".lightMode").forEach((eachElement) => {
+      eachElement.classList.remove("lightMode");
+      eachElement.classList.add("darkMode");
+    });
+    //Make all buttons light
+    document.querySelectorAll(".lightModeButton").forEach((eachElement) => {
+      eachElement.classList.remove("lightModeButton");
+      eachElement.classList.add("darkModeButton");
+    });
+
+    //Make the background dark
+    appContainerElement.style.backgroundColor = "rgb(30, 30, 30)";
+
+    //Change light/dark mode logo in both locations
+    flipMode1Element.innerHTML = `<img
+      class="flipIconLight"
+      src="/client/images/icons8-light-mode-78.png"
+    />`;
+    flipMode2Element.innerHTML = `<img
+      class="flipIconLight"
+      src="/client/images/icons8-light-mode-78.png"
+    />`;
+
+    document.querySelectorAll(".cardStyleLight").forEach((eachElement) => {
+      eachElement.classList.remove("cardStyleLight");
+      eachElement.classList.add("cardStyleDark");
+    });
+    //Remove top nav shadow
+    topNavElement.style.boxShadow = "none";
+  } else {
+    //Make all elements dark
+    document.querySelectorAll(".darkMode").forEach((eachElement) => {
+      eachElement.classList.remove("darkMode");
+      eachElement.classList.add("lightMode");
+    });
+    //Make all buttons dark
+    document.querySelectorAll(".darkModeButton").forEach((eachElement) => {
+      eachElement.classList.remove("darkModeButton");
+      eachElement.classList.add("lightModeButton");
+    });
+    //Make the background light
+    appContainerElement.style.backgroundColor = "rgb(235, 235, 235)";
+
+    //Change light/dark mode logo in both locations
+    flipMode1Element.innerHTML = `<img
+            class="flipIconDark"
+            src="/client/images/icons8-dark-mode-50.png"
+          />`;
+    flipMode2Element.innerHTML = `<img
+            class="flipIconDark"
+            src="/client/images/icons8-dark-mode-50.png"
+          />`;
+
+    document.querySelectorAll(".cardStyleDark").forEach((eachElement) => {
+      eachElement.classList.remove("cardStyleDark");
+      eachElement.classList.add("cardStyleLight");
+    });
+    //Add top nav shadow
+    topNavElement.style.boxShadow = "0px 5px 10px rgb(158, 157, 157)";
+  }
 };
+
+//Run initial functions
+
+getAllStocks();
+getAllNews();
+
+setTimeout(() => {
+  searchStock("AAPL");
+}, 1000);
