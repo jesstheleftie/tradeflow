@@ -248,7 +248,7 @@ const searchStock = async (searchInput) => {
     chartArray = [firstRow];
     const barAmount = 50;
     resArray
-      //.slice(start from index,end at index)
+      //.slice(start from index,end at index) to extract the last 50 price data
       .slice(resArray.length - (barAmount + 1), resArray.length - 1)
       .forEach((eachCandle) => {
         let color = "black";
