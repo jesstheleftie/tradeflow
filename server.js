@@ -12,6 +12,11 @@ const app = express();
 // const plantController = require('./controllers/plantController')
 
 // require() imports and middleware here ^ ///////
+
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname + "client/index.html"));
+});
+
 app.use(cors());
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
@@ -20,7 +25,6 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 
 // app.use() middleware here ^ ///////////////////
-
 
 app.post("/getData", stockController.getStockData);
 app.get("/news", stockController.getStockNews);
@@ -52,4 +56,3 @@ app.post("/transactions", transactionController.createTransaction);
 
 //Ticker GET
 app.get("/tickers", tickerController.getAllTickers);
-
