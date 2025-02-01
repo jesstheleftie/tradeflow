@@ -9,12 +9,13 @@ const watchlistItemController = require("./controllers/watchlistItemController")
 const tickerController = require("./controllers/tickerController");
 const transactionController = require("./controllers/transactionController");
 const app = express();
+const path = require("path");
 // const plantController = require('./controllers/plantController')
 
 // require() imports and middleware here ^ ///////
 
 app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname + "client/index.html"));
+  res.sendFile(path.join(__dirname + "/client/index.html"));
 });
 
 app.use(cors());
