@@ -1,5 +1,5 @@
-const db = require("../db");
-const TickerList = require("../../models/tickerList");
+const db = require("../db/index");
+const TickerList = require("../models/tickerList");
 
 // Connect to the database
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
@@ -51004,7 +51004,7 @@ const main = async () => {
       cik_str: 1380365,
       ticker: "IDKOF",
       companyName: "IDEMITSU KOSAN CO., LTD",
-    }, 
+    },
   ];
 
   await TickerList.insertMany(rawTickers);

@@ -1,5 +1,5 @@
 const BASE_URL = "https://tradeflow-327c5044b0d5.herokuapp.com";
-// const BASE_URL = "localhost:3001";
+// const BASE_URL = "http://localhost:3001";
 
 //Elements
 const appContainerElement = document.querySelector(".appContainer");
