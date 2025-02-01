@@ -104,10 +104,7 @@ const login = async () => {
     pin: pinInput,
   };
   try {
-    let foundUser = await axios.post(
-      "http://localhost:3001/users/login",
-      requestBody
-    );
+    let foundUser = await axios.post("/users/login", requestBody);
     if (foundUser) {
       loggedIn = true;
       loggedInUser = foundUser.data;
@@ -143,9 +140,7 @@ const logout = () => {
 const getUserWatchlist = async () => {
   if (loggedIn) {
     try {
-      let returnData = await axios.get(
-        `http://localhost:3001/watchlistItems/${loggedInUser._id}`
-      );
+      let returnData = await axios.get(`/watchlistItems/${loggedInUser._id}`);
       userWatchlist = returnData.data;
     } catch (error) {}
   }
@@ -177,9 +172,7 @@ const renderWatchlist = () => {
 const getUserTransaction = async () => {
   if (loggedIn) {
     try {
-      let returnData = await axios.get(
-        `http://localhost:3001/transactions/${loggedInUser._id}`
-      );
+      let returnData = await axios.get(`/transactions/${loggedInUser._id}`);
       userTransaction = returnData.data;
     } catch (error) {}
   }
@@ -213,7 +206,7 @@ const renderTransaction = () => {
 //Stocks
 const getAllStocks = async () => {
   try {
-    const res = await axios.get("http://localhost:3001/tickers");
+    const res = await axios.get("/tickers");
 
     allStocks = res.data;
     allTickers = allStocks.map((stock) => {
@@ -235,7 +228,7 @@ const searchStock = async (searchInput) => {
     ticker: searchInput.toUpperCase(),
   };
   try {
-    const data = await axios.post("http://localhost:3001/getData", requestBody);
+    const data = await axios.post("/getData", requestBody);
     searchInput = "";
     chartTicker = data.data.ticker;
     chartCompanyName = allStocks.find((eachStock) => {
@@ -278,7 +271,7 @@ const searchStock = async (searchInput) => {
 //News
 const getAllNews = async () => {
   try {
-    const res = await axios.get("http://localhost:3001/news");
+    const res = await axios.get("/news");
     allNews = res.data.results;
     renderNews();
   } catch (error) {}
@@ -311,10 +304,7 @@ const buyStock = async () => {
       qty: ordersQtyInput,
       price: chartStockPrice,
     };
-    const res = await axios.post(
-      "http://localhost:3001/transactions",
-      requestBody
-    );
+    const res = await axios.post("/transactions", requestBody);
     if (res) {
       userTransaction.push(res.data.transaction);
       ordersQtyInput = 0;
@@ -335,10 +325,7 @@ const sellStock = async () => {
       qty: ordersQtyInput * -1,
       price: chartStockPrice,
     };
-    const res = await axios.post(
-      "http://localhost:3001/transactions",
-      requestBody
-    );
+    const res = await axios.post("/transactions", requestBody);
     if (res) {
       userTransaction.push(res.data.transaction);
       ordersQtyInput = 0;
@@ -387,7 +374,7 @@ const favouriteClick = async () => {
   });
   if (foundWatchlistStock) {
     let deletedWatchlistStock = await axios.delete(
-      `http://localhost:3001/watchlistItems/${foundWatchlistStock._id}`
+      `/watchlistItems/${foundWatchlistStock._id}`
     );
 
     if (deletedWatchlistStock) {
@@ -412,10 +399,7 @@ const favouriteClick = async () => {
       ticker: chartTicker,
       companyName: chartCompanyName,
     };
-    let addedWatchlistStock = await axios.post(
-      "http://localhost:3001/watchlistItems",
-      requestBody
-    );
+    let addedWatchlistStock = await axios.post("/watchlistItems", requestBody);
 
     if (addedWatchlistStock) {
       userWatchlist.push(addedWatchlistStock.data.watchlist);
