@@ -218,28 +218,28 @@ const getAllStocks = async () => {
     console.log(`${BASE_URL}/tickers`);
     const res = await axios.get(`${BASE_URL}/tickers`);
     console.log("firstLoaded", firstLoaded);
-    if (!firstLoaded) {
-      console.log("first load");
-      searchStock("AAPL");
-    }
     console.log("res", res.data);
     allStocks = res.data;
     allTickers = allStocks.map((stock) => {
       return stock.ticker;
     });
+    if (!firstLoaded) {
+      console.log("first load");
+      searchStock("AAPL");
+    }
   } catch (error) {
     console.error("Error", error);
   }
 };
 
 const searchStock = async (searchInput) => {
-  firstLoaded = true;
   searchDropDownElement.innerHTML = "";
   console.log("123", allTickers, searchInput);
   //Check if searchInput ticker is valid
-  if (!allTickers.includes(searchInput.toUpperCase())) {
+  if (!firstLoaded && !allTickers.includes(searchInput.toUpperCase())) {
     return;
   }
+  firstLoaded = true;
   console.log("456");
   const requestBody = {
     ticker: searchInput.toUpperCase(),
