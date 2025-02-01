@@ -210,11 +210,16 @@ const renderTransaction = () => {
     });
 };
 
+let firstLoaded = false;
+
 //Stocks
 const getAllStocks = async () => {
   try {
     console.log(`${BASE_URL}/tickers`);
     const res = await axios.get(`${BASE_URL}/tickers`);
+    if (!firstLoaded) {
+      searchStock("AAPL");
+    }
     console.log("res", res.data);
     allStocks = res.data;
     allTickers = allStocks.map((stock) => {
@@ -226,6 +231,7 @@ const getAllStocks = async () => {
 };
 
 const searchStock = async (searchInput) => {
+  firstLoaded = true;
   searchDropDownElement.innerHTML = "";
   console.log("123", allTickers, searchInput);
   //Check if searchInput ticker is valid
@@ -676,11 +682,5 @@ const render = () => {
 };
 
 //Run initial functions
-setTimeout(() => {
-  getAllStocks();
-  getAllNews();
-}, 1000);
-
-setTimeout(() => {
-  searchStock("AAPL");
-}, 10000);
+getAllStocks();
+getAllNews();
