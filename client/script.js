@@ -213,8 +213,9 @@ const renderTransaction = () => {
 //Stocks
 const getAllStocks = async () => {
   try {
+    console.log(`${BASE_URL}/tickers`);
     const res = await axios.get(`${BASE_URL}/tickers`);
-
+    console.log("res", res.data);
     allStocks = res.data;
     allTickers = allStocks.map((stock) => {
       return stock.ticker;
@@ -226,15 +227,17 @@ const getAllStocks = async () => {
 
 const searchStock = async (searchInput) => {
   searchDropDownElement.innerHTML = "";
-
+  console.log("123", allTickers, searchInput);
   //Check if searchInput ticker is valid
   if (!allTickers.includes(searchInput.toUpperCase())) {
     return;
   }
+  console.log("456");
   const requestBody = {
     ticker: searchInput.toUpperCase(),
   };
   try {
+    console.log(`${BASE_URL}/getData`);
     const data = await axios.post(`${BASE_URL}/getData`, requestBody);
     searchInput = "";
     chartTicker = data.data.ticker;
@@ -673,10 +676,11 @@ const render = () => {
 };
 
 //Run initial functions
-
-getAllStocks();
-getAllNews();
+setTimeout(() => {
+  getAllStocks();
+  getAllNews();
+}, 1000);
 
 setTimeout(() => {
   searchStock("AAPL");
-}, 1000);
+}, 10000);
