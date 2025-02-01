@@ -217,7 +217,9 @@ const getAllStocks = async () => {
   try {
     console.log(`${BASE_URL}/tickers`);
     const res = await axios.get(`${BASE_URL}/tickers`);
+    console.log("firstLoaded", firstLoaded);
     if (!firstLoaded) {
+      console.log("first load");
       searchStock("AAPL");
     }
     console.log("res", res.data);
