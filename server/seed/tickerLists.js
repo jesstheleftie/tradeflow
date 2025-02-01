@@ -1,5 +1,5 @@
 const db = require("../db");
-const TickerList = require("../models/tickerList");
+const TickerList = require("../../models/tickerList");
 
 // Connect to the database
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
