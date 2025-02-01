@@ -1,5 +1,6 @@
 const { default: axios } = require("axios");
-const apiKey = "wQS_7upXK7ElEJm1SZb6iBSIHyW_xVEW";
+
+const APIKEY = process.env.STOCK_API;
 
 const getStockData = async (req, res) => {
   const { ticker } = req.body;
@@ -11,7 +12,7 @@ const getStockData = async (req, res) => {
       .toISOString()
       .split("T")[0];
     const stockData = await axios.get(
-      `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/10/minute/${oneWeekAgoDate}/${todayDate}?adjusted=true&sort=asc&apiKey=${apiKey}`
+      `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/10/minute/${oneWeekAgoDate}/${todayDate}?adjusted=true&sort=asc&apiKey=${APIKEY}`
     );
 
     res.json(stockData.data);
@@ -21,11 +22,10 @@ const getStockData = async (req, res) => {
 };
 
 const getStockNews = async (req, res) => {
-  console.log("123");
   const { ticker } = req.body;
   try {
     const stockNews = await axios.get(
-      `https://api.polygon.io/v2/reference/news?limit=30&apiKey=${apiKey}`
+      `https://api.polygon.io/v2/reference/news?limit=30&apiKey=${APIKEY}`
     );
 
     console.log("stockNews", stockNews.data);
