@@ -215,16 +215,12 @@ let firstLoaded = false;
 //Stocks
 const getAllStocks = async () => {
   try {
-    console.log(`${BASE_URL}/tickers`);
     const res = await axios.get(`${BASE_URL}/tickers`);
-    console.log("firstLoaded", firstLoaded);
-    console.log("res", res.data);
     allStocks = res.data;
     allTickers = allStocks.map((stock) => {
       return stock.ticker;
     });
     if (!firstLoaded) {
-      console.log("first load");
       searchStock("AAPL");
     }
   } catch (error) {
@@ -234,18 +230,15 @@ const getAllStocks = async () => {
 
 const searchStock = async (searchInput) => {
   searchDropDownElement.innerHTML = "";
-  console.log("123", allTickers, searchInput);
   //Check if searchInput ticker is valid
   if (!firstLoaded && !allTickers.includes(searchInput.toUpperCase())) {
     return;
   }
   firstLoaded = true;
-  console.log("456");
   const requestBody = {
     ticker: searchInput.toUpperCase(),
   };
   try {
-    console.log(`${BASE_URL}/getData`);
     const data = await axios.post(`${BASE_URL}/getData`, requestBody);
     searchInput = "";
     chartTicker = data.data.ticker;
