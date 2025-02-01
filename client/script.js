@@ -632,11 +632,11 @@ const render = () => {
     //Change light/dark mode logo in both locations
     flipMode1Element.innerHTML = `<img
       class="flipIconLight"
-      src="/client/images/icons8-light-mode-78.png"
+      src="images/icons8-light-mode-78.png"
     />`;
     flipMode2Element.innerHTML = `<img
       class="flipIconLight"
-      src="/client/images/icons8-light-mode-78.png"
+      src="images/icons8-light-mode-78.png"
     />`;
 
     document.querySelectorAll(".cardStyleLight").forEach((eachElement) => {
@@ -662,11 +662,11 @@ const render = () => {
     //Change light/dark mode logo in both locations
     flipMode1Element.innerHTML = `<img
             class="flipIconDark"
-            src="/client/images/icons8-dark-mode-50.png"
+            src="images/icons8-dark-mode-50.png"
           />`;
     flipMode2Element.innerHTML = `<img
             class="flipIconDark"
-            src="/client/images/icons8-dark-mode-50.png"
+            src="images/icons8-dark-mode-50.png"
           />`;
 
     document.querySelectorAll(".cardStyleDark").forEach((eachElement) => {
